@@ -101,7 +101,7 @@ def getSubredditsTopStats(r, subreddits):
 
   return subredditStats
 
-def crawlPosts(r, postType):
+def crawlPosts(r, postType, subreddits):
   """Crawls the posts in a giving postType. Finding reposts, skiping ones already looked at (decayed).
   If a suitable repost, and comment are found. Post the old comment onto the new repost.
   Printing out info about every repost found, and the Totals after all the posts are crawled.
@@ -109,8 +109,6 @@ def crawlPosts(r, postType):
   """
   print 'Crawling posts...'
   
-  subreddits = ['interestingasfuck', 'roomporn', 'comics', 'realgirls', 'historyporn', 'fiftyfifty', 'pcmasterrace', 'earthporn', 'nsfw', 'gonewild', 'cringepics', 'aww','mildlyintersting', 'gifs', 'wtf', 'gaming', 'funny', 'pics', 'OldSchoolCool', 'wallpapers', 'abandonporn', 'curiousplaces']
-  bannedSubreddits = ['gentlemanboners', 'space', 'whoadude', 'holdmybeer']
   print len(subreddits), ' total subreddits'
 
   print 'Loading decayed.json...'
@@ -210,7 +208,7 @@ def main ():
       subreddits = json.load(subredditJson)
     
   print 'Logging in...'
-  user_agent = ("mac:com.panderingwhore.panderer:v1.1.1 (by /u/panderingwhore)")
+  user_agent = ("CHANGE ME")
   r = praw.Reddit(user_agent = user_agent)
   o = OAuth2Util.OAuth2Util(r)
   o.refresh(force=True)
@@ -219,13 +217,13 @@ def main ():
   print 'Starting at', startTime
 
   print 'Starting rising...'
-  crawlPosts(r, 'rising')
+  crawlPosts(r, 'rising', subreddits)
   print 'Finished rising'
   print 'Starting new...'
-  crawlPosts(r, 'new')
+  crawlPosts(r, 'new', subreddits)
   print 'Finished new'
   print 'Starting hot...'
-  crawlPosts(r, 'hot')
+  crawlPosts(r, 'hot', subreddits)
   print 'Finished hot'
   
   print 'Finish time:', datetime.now()
